@@ -7,6 +7,6 @@ export class Heroe {
         public thumbnail_path: string,
         public thumbnail_extension: string,
         public resourceURI: string,
-        public teamColor: string
+        public teamColor: string,
     ) {}
 }

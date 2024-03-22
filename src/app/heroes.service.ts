@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Heroe } from './classes/heroe';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +17,15 @@ export class HeroesService {
   public step = 20;
   public total = 0;
 
-  group_colors: TeamColors = {
+  public teamColors: Record<string, string> =  {
     azul: '#0000FF',
     violeta: '#8B00FF',
     naranjo: '#FFA500',
     verde: '#008000'
   };
+
+  
+
 
   public teams = new Map();
 
@@ -35,8 +39,10 @@ export class HeroesService {
   }
 
   getHeroes (nameStartsWith?: string, page?: number) {
-    console.log("TEAMS");
+    console.log("TEAMS"); 
     console.log(Array.from(this.teams));
+    console.log(this.teams)
+    
     if (page || page === 0) {
       this.page = page;
     }
@@ -48,6 +54,12 @@ export class HeroesService {
       const data = response as { data: any}
       this.total = Math.ceil(data.data.total / this.step);
       data.data.results.forEach( (result: any) => {
+        let team = '';
+        for (const[key, value] of this.teams){
+          if (key === result.id+'characters'){
+            team = value
+          }
+        }
           this.heroes.push(new Heroe(
             result.id,
             result.name,
@@ -56,18 +68,19 @@ export class HeroesService {
             result.thumbnail.path,
             result.thumbnail.extension,
             result.resourceURI,
-            this.getTeamColor(result.id)
+            team || this.getTeamColor(result.id),
           ));
         }
         
       );
-    
+      console.log(this.heroes);
     });
   }
 
 
   getTeamColor(id: string):string{
     if(this.teams.get(id)!=undefined){
+      console.log(this.teams.get(id))
       return this.teams.get(id);
     }
     else{
@@ -80,13 +93,20 @@ export class HeroesService {
     return this.http.get(url);
   }
 
+  getCodColor(teamName: string): string{
+    return this.teamColors[teamName]
+  }
+ 
+  
+  
+
 }
 
 interface TeamColors {
-  azul: string;
-  violeta: string;
-  naranjo: string;
-  verde: string;
+  blue: string;
+  violet: string;
+  orange: string;
+  green: string;
 }
 
 /*  ngOnInit() {

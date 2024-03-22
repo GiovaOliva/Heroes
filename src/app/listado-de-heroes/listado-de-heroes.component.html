@@ -7,7 +7,7 @@
   </form>
   <div *ngFor="let heroe of heroesService.heroes; let i = index;" class="col-xs-12 col-sm-6 col-md-3">
       <!--[routerLink]="'/heroe/' + heroe.id" === (click)="go_to(heroe.id)"-->
-    <a (click)="go_to(heroe.id)" class="hero-entry" [style.border-color]="heroesService.getTeamColor" [style.background-image]="'url(' + heroe.thumbnail_path + '.' + heroe.thumbnail_extension + ')'">
+    <a (click)="go_to(heroe.id)" class="hero-entry" [ngStyle]="{'border-color': heroesService.teamColors[heroe.teamColor]}" [style.background-image]="'url(' + heroe.thumbnail_path + '.' + heroe.thumbnail_extension + ')'">
       <span>{{heroe.name}}</span>
     </a>
   </div>

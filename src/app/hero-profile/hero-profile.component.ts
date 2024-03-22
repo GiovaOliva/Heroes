@@ -16,6 +16,7 @@ export class HeroProfileComponent implements OnInit {
   public heroe!: Heroe;
   public question_modal!: string;
   public team:string = "";
+  public color!: string;
 
   constructor(private route: ActivatedRoute, public heroesService: HeroesService, private location: Location) { }
 
@@ -25,13 +26,14 @@ export class HeroProfileComponent implements OnInit {
       this.heroesService.getHeroe(this.id).subscribe( response => {
         const data = response as { data: any}
         const temp = data.data.results[0];
+        console.log(temp)
         this.heroe = new Heroe(temp.id, temp.name, temp.description, temp. modified, temp.thumbnail.path, temp.thumbnail.extension, temp.resourceURI,this.heroesService.getTeamColor(temp.id));
         console.log("Tiene equipo?");
         console.log(this.heroe.teamColor);
         this.team = this.heroe.teamColor;
-        console.log(this.heroe)
+        
       });
-     
+      
     });
     
   }
@@ -40,10 +42,11 @@ export class HeroProfileComponent implements OnInit {
     this.location.back();
   }
 
-  getTeam(team: string):void{
-    console.log("Color: "+team);
+  getTeam(team: string): void {
+    console.log("Color:", team);
     this.team = team;
-    this.heroesService.teams.set(this.heroe.id, this.team);
+    console.log(this.heroe.id)
+    this.heroesService.teams.set(this.heroe.id, this.team); // Assuming teams is a Map
   }
 
   launchModal():void{
@@ -52,4 +55,7 @@ export class HeroProfileComponent implements OnInit {
     this.modal.toggle_modal();
   }
 
-}
+
+
+  }
+

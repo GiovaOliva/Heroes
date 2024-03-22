@@ -3,14 +3,14 @@
     <a class="goback" (click)="goBack()">Atrás</a>
     <div class="row" class="heroe-profile">
   
-      <div class="col-xs-12 col-sm-6 col-md-4">
-        <img [src]="heroe.thumbnail_path + '.' + heroe.thumbnail_extension">
+      <div class="col-xs-12 col-sm-6 col-md-4" >
+        <img [src]="heroe.thumbnail_path + '.' + heroe.thumbnail_extension" [ngStyle]="{'border-color': heroesService.getCodColor(heroe.teamColor)}">
       </div>
       <div class="col-xs-12 col-sm-6 col-md-8">
         <h3>Descripción</h3>
         <p>{{heroe.description}}</p>
         <p class="modified">{{heroe.modified | date:'fullDate'}}, {{heroe.modified | date:'shortTime'}}</p>
-        <p *ngIf="team!=undefined && team!=''">Acabas de clasificar a tu héroe en el equipo <b [style.color]="heroesService.getTeamColor">{{team}}</b></p>
+        <p *ngIf="team!=undefined && team!=''">Acabas de clasificar a tu héroe en el equipo <b [ngStyle]="{'color': heroesService.getCodColor(heroe.teamColor)}">{{team}}</b></p>
         <p><button type="button" class="btn btn-primary" (click)="launchModal()">Clasificar</button></p>
       </div>
     </div>
