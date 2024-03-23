@@ -11,27 +11,29 @@ import { Injectable } from '@angular/core';
 @State<HeroeStateModel>({
     name: 'heroes',
     defaults: {
-        heroArray :  new Array<Heroe>
+        heroeArray :  new Array<Heroe>
     }
 })
 
 export class HeroeState {
 
-    public Arrayheroes: Array<Heroe> = [];
  
-    constructor(private HeroService: HeroesService){}
+    constructor(private HeroeService: HeroesService){}
 
     @Action(HeroeData)
-    get( ctx:  StateContext<HeroeStateModel>, action: HeroeData){
+    async get( ctx:  StateContext<HeroeStateModel>, action: HeroeData){
+        let Array: Array<Heroe>
         
-        
-        const state = ctx.getState();
+        if (action.payload.page === 0){
+            Array = await this.HeroeService.getHeroes();   
+        }else{
+            Array = await this.HeroeService.getHeroes(action.payload.searchString, action.payload.page)
+        }
         ctx.setState({
-            ...state,
-            heroArray:[
-                ...state.heroArray,
-                ...this.Arrayheroes
+            heroeArray:[
                 
+                ...Array
+
             ]
         })
       }

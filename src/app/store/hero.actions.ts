@@ -2,8 +2,10 @@
 
 
 export class HeroeData {
-    static readonly type = '[HeroData ListHero] GetData'
+    static readonly type = '[Heroes] GetData'
 
-    constructor(public payload: string){}
+    constructor(public readonly payload: {searchString: string, page: number}){
+
+    }
    
 }
