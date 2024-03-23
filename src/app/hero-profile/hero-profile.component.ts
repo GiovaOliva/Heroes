@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ModalPollComponent } from '../modal-poll/modal-poll.component';
 import { Heroe } from '../classes/heroe';
 import { ActivatedRoute} from '@angular/router';
@@ -35,7 +35,7 @@ export class HeroProfileComponent implements OnInit {
         console.log("Tiene equipo?");
         console.log(this.heroe.teamColor);
         this.team = this.heroe.teamColor;
-        this.changeDetectorRef.detectChanges(); // Update
+        this.changeDetectorRef.detectChanges();
         this.hisColor$.next(this.heroeCodColor(this.team));
         })
       });
