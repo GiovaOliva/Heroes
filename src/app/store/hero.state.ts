@@ -18,14 +18,13 @@ import { Injectable } from '@angular/core';
 export class HeroeState {
 
     public Arrayheroes: Array<Heroe> = [];
-    public page = 0;
-    public step = 20;
-    public total = 0;
+ 
     constructor(private HeroService: HeroesService){}
 
     @Action(HeroeData)
     get( ctx:  StateContext<HeroeStateModel>, action: HeroeData){
-        let offset = action.payload;
+        
+        
         const state = ctx.getState();
         ctx.setState({
             ...state,

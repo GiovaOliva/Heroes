@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SpinnerService } from './spinner.service';
 
 @Component({
   selector: 'spinner',
@@ -6,9 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./spinner.component.scss']
 })
 export class SpinnerComponent {
-  show_spinner: boolean = false;
+  isLoading$ = this.SpinnerSvc.isLoading$;
+  
+  constructor(private readonly SpinnerSvc: SpinnerService){
 
-  toggle_spinner(): void {
-    this.show_spinner = !this.show_spinner;
   }
 }

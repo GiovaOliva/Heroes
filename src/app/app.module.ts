@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgxsModule } from '@ngxs/store';
@@ -17,6 +17,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { environment } from './environments/environment';
 import { HeroeState } from './store/hero.state';
 import { HeroesService } from './heroes.service';
+import { SpinnerInterceptor } from './spinner/spinner.interceptor';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { HeroesService } from './heroes.service';
   ],
   providers: [
     HeroesService, // Suponiendo que ya hayas agregado HeroesService aquí
-    HeroeState
+    HeroeState,
+    {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })

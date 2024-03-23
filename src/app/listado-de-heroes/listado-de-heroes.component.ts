@@ -18,31 +18,48 @@ export class ListadoDeHeroesComponent implements OnInit {
   // The child component : spinner
   @ViewChild('spi') spinner!: SpinnerComponent;
   /* public heroes: Array<Heroe> = []; */
-
+  public heroeArray :  Heroe[];
+  
    
-    constructor(public heroesService: HeroesService, private router:Router) { }
+    constructor(private heroesService: HeroesService, private router:Router) { }
 
-    submitSearch() {
+    
+    async ngOnInit() {
+      
+      this.heroeArray = await this.heroesService.getHeroes();
+      console.log(this.heroeArray);
+
+    }
+
+    heroeCodColor(team: string): string{
+      let codColor = this.heroesService.getCodColor(team)
+      return codColor
+    }
+
+    getPage(): number{
+      let page = this.heroesService.page;
+      return page
+    }
+    getTotal(): number{
+      let total = this.heroesService.total;
+      return total
+    }
+
+    async submitSearch() {
       this.heroesService.resetPager();
-      this.heroesService.getHeroes(this.searchString);
+      this.heroeArray = await this.heroesService.getHeroes(this.searchString);
     }
   
-    prevPage() {
-      this.heroesService.getHeroes(this.searchString, this.heroesService.page - 1);
+    async prevPage() {
+      this.heroeArray = await this.heroesService.getHeroes(this.searchString, this.heroesService.page - 1);
     }
   
-    nextPage() {
-      this.heroesService.getHeroes(this.searchString, this.heroesService.page + 1);
+    async nextPage() {
+      this.heroeArray = await this.heroesService.getHeroes(this.searchString, this.heroesService.page + 1);
     }
   
     go_to(id: string){
       this.router.navigateByUrl('/heroe/'+id);
     }
 
-    ngOnInit() {
-      this.heroesService.getHeroes();
-      
-  
-
-    }
 }

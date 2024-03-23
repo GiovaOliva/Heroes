@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { HeroesService } from '../heroes.service';
+import { HeroProfileComponent } from '../hero-profile/hero-profile.component';
 
 @Component({
   selector: 'app-modal-poll',
@@ -11,7 +13,7 @@ export class ModalPollComponent implements OnInit {
   @Input() public team_selected! : string;
   @Output() setTeam:EventEmitter<string> = new EventEmitter<string>();
 
-  constructor() { }
+  constructor(private HeroProfile: HeroProfileComponent) { }
 
   ngOnInit() {
   }
@@ -19,6 +21,7 @@ export class ModalPollComponent implements OnInit {
   
   send_team(team: string): void {
     console.log("Im in child: ");
+    this.HeroProfile.hisColor$.next(this.HeroProfile.heroeCodColor(team));
     console.log(team);
     this.setTeam.emit(team);
     this.toggle_modal();

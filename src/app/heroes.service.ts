@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Heroe } from './classes/heroe';
-import { Observable } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +38,7 @@ export class HeroesService {
     this.page = 0;
   }
 
-  getHeroes (nameStartsWith?: string, page?: number) {
+  async getHeroes (nameStartsWith?: string, page?: number) :Promise <Heroe[]> {
     console.log("TEAMS"); 
     console.log(Array.from(this.teams));
     console.log(this.teams)
@@ -49,34 +49,32 @@ export class HeroesService {
     const url = this.protocol + this.ApiUrl + `characters?ts=1&apikey=${this.yourApiKey}&hash=e66f6d4113c62a340eccea2bbe11aef7`
     + '&offset=' + (this.page * this.step)
     + (nameStartsWith ? ('&nameStartsWith=' + nameStartsWith) : '');
-    this.http.get(url).subscribe((response) => {
-      this.heroes = [];
-      const data = response as { data: any}
-      this.total = Math.ceil(data.data.total / this.step);
-      data.data.results.forEach( (result: any) => {
-        let team = '';
-        for (const[key, value] of this.teams){
-          if (key === result.id+'characters'){
-            team = value
-          }
+    const response = await lastValueFrom(this.http.get(url));
+    const data = response as {data : any}
+    this.heroes = [];
+    this.total = Math.ceil(data.data.total / this.step);
+    data.data.results.forEach( (result : any) => {
+      let team = '';
+      for (const [key, value] of this.teams){
+        if( key === result.id+ 'characters'){
+          team = value
         }
-          this.heroes.push(new Heroe(
-            result.id,
-            result.name,
-            result.description,
-            result.modified,
-            result.thumbnail.path,
-            result.thumbnail.extension,
-            result.resourceURI,
-            team || this.getTeamColor(result.id),
-          ));
-        }
-        
-      );
-      console.log(this.heroes);
-    });
-  }
+      }
+      this.heroes.push(new Heroe(
+        result.id,
+        result.name,
+        result.description,
+        result.modified,
+        result.thumbnail.path,
+        result.thumbnail.extension,
+        result.resourceURI,
+        team || this.getTeamColor(result.id),
+      ))
+    })
+    return this.heroes;
 
+  }
+    
 
   getTeamColor(id: string):string{
     if(this.teams.get(id)!=undefined){
@@ -94,7 +92,7 @@ export class HeroesService {
   }
 
   getCodColor(teamName: string): string{
-    return this.teamColors[teamName]
+    return this.teamColors[teamName] || ""
   }
  
   
@@ -102,12 +100,7 @@ export class HeroesService {
 
 }
 
-interface TeamColors {
-  blue: string;
-  violet: string;
-  orange: string;
-  green: string;
-}
+
 
 /*  ngOnInit() {
     this.http.get(`https://gateway.marvel.com/v1/public/characters?ts=1&apikey=${this.yourApiKey}&hash=e66f6d4113c62a340eccea2bbe11aef7`)
