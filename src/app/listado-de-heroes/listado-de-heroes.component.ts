@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { HeroesService } from '../heroes.service';
 import { Router } from '@angular/router';
 import { Heroe } from '../classes/heroe';
 import { Store } from '@ngxs/store';
 import { HeroeData } from '../store/hero.actions';
+import { Observable, Subject, lastValueFrom } from 'rxjs';
 
 
 @Component({
@@ -14,21 +15,25 @@ import { HeroeData } from '../store/hero.actions';
 })
 export class ListadoDeHeroesComponent implements OnInit {
   public title = 'Tutorial de Angular - Héroes de Marvel';
-  public searchString!: string;
+  public searchString: string;
   // The child component : spinner
   @ViewChild('spi') spinner!: SpinnerComponent;
   /* public heroes: Array<Heroe> = []; */
-  public heroeArray :  Heroe[];
+  hisColor$ = new Subject<string>();
+  heroeArray$: Observable<Heroe[]>;
+
+  
   
    
-    constructor(private heroesService: HeroesService, private router:Router) { }
+    constructor(private heroesService: HeroesService, private router:Router, public store: Store) { }
 
     
-    async ngOnInit() {
+    async ngOnInit(): Promise<void> {
       
-      this.heroeArray = await this.heroesService.getHeroes();
-      console.log(this.heroeArray);
-
+      const payload = {searchString: '', page: 0}
+      await lastValueFrom(this.store.dispatch(new HeroeData(payload)));
+      this.heroeArray$ = this.store.select(state => state.heroes.heroes)
+   
     }
 
     heroeCodColor(team: string): string{
@@ -45,21 +50,35 @@ export class ListadoDeHeroesComponent implements OnInit {
       return total
     }
 
-    async submitSearch() {
+    async submitSearch(): Promise<void> {
       this.heroesService.resetPager();
-      this.heroeArray = await this.heroesService.getHeroes(this.searchString);
+      const payload = {searchString: this.searchString}
+      await lastValueFrom(this.store.dispatch(new HeroeData(payload)));
     }
   
-    async prevPage() {
-      this.heroeArray = await this.heroesService.getHeroes(this.searchString, this.heroesService.page - 1);
-    }
+    async prevPage(): Promise<void> {
+        
+        const payload = {page: this.heroesService.page - 1}
+        await lastValueFrom(this.store.dispatch(new HeroeData(payload)));
+      }
+      
+   
+      // this.heroeArray = await this.heroesService.getHeroes(this.searchString, this.heroesService.page - 1);
+    
   
-    async nextPage() {
-      this.heroeArray = await this.heroesService.getHeroes(this.searchString, this.heroesService.page + 1);
+    async nextPage(): Promise<void> {
+      const payload = {page: this.heroesService.page + 1}
+      await lastValueFrom(this.store.dispatch(new HeroeData(payload)));
+  
+      // this.heroeArray = await this.heroesService.getHeroes(this.searchString, this.heroesService.page + 1);
     }
   
     go_to(id: string){
       this.router.navigateByUrl('/heroe/'+id);
     }
 
-}
+} 
+
+
+
+

@@ -8,15 +8,21 @@ import {
 import { Observable, finalize } from 'rxjs';
 import { SpinnerService } from './spinner.service';
 
+let requestCount = 0;
 @Injectable()
 export class SpinnerInterceptor implements HttpInterceptor {
 
   constructor(private readonly Spinner: SpinnerService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    requestCount++;
     this.Spinner.show();
+
     return next.handle(request).pipe(
-      finalize(() => this.Spinner.hide())
+      finalize(() => {
+        requestCount--;
+        if (requestCount === 0) {
+        this.Spinner.hide()}})
     );
   }
 }

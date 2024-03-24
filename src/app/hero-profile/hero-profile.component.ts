@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ModalPollComponent } from '../modal-poll/modal-poll.component';
 import { Heroe } from '../classes/heroe';
 import { ActivatedRoute} from '@angular/router';
@@ -57,8 +57,8 @@ export class HeroProfileComponent implements OnInit {
     console.log("Color:", team);
     this.team = team;
     console.log(this.heroe.id)
-    this.heroesService.teams.set(this.heroe.id, this.team); // Assuming teams is a Map
-    this.changeDetectorRef.detectChanges(); // Update
+    this.heroesService.teams.set(this.heroe.id, this.team);
+    this.changeDetectorRef.detectChanges(); 
     this.hisColor$.next(this.heroeCodColor(team));
     
   }

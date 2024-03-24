@@ -101,16 +101,3 @@ export class HeroesService {
 }
 
 
-
-/*  ngOnInit() {
-    this.http.get(`https://gateway.marvel.com/v1/public/characters?ts=1&apikey=${this.yourApiKey}&hash=e66f6d4113c62a340eccea2bbe11aef7`)
-      .subscribe((response) => {
-        console.log('Respuesta de la API:', response);
-        const data = response as { data: any }
-        console.log(data.data.results)
-
-      },
-        (error) => {
-          console.error('Error:', error); // Handle errors gracefully
-        });
-  }*/
