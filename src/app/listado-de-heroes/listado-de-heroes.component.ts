@@ -51,7 +51,7 @@ export class ListadoDeHeroesComponent implements OnInit {
 
     async submitSearch(): Promise<void> {
       this.heroesService.resetPager();
-      const payload = {searchString: this.searchString}
+      const payload = {searchString: this.searchString, page: this.heroesService.page}
       await lastValueFrom(this.store.dispatch(new HeroeData(payload)));
     }
   

@@ -1,8 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { HeroesService } from './heroes.service';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { SpinnerComponent } from './spinner/spinner.component';
+import { Component } from '@angular/core';
 
 
 @Component({
@@ -12,8 +8,5 @@ import { SpinnerComponent } from './spinner/spinner.component';
 })
 
 export class AppComponent  {
-
-  
-
 
 }

@@ -38,7 +38,7 @@ export class HeroeState {
 
             ]
         })
-       
+       console.log(Array)
 
     }
       

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
@@ -11,7 +10,6 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeroProfileComponent } from './hero-profile/hero-profile.component';
-import { ListadoDeHeroesComponent } from './listado-de-heroes/listado-de-heroes.component';
 import { ModalPollComponent } from './modal-poll/modal-poll.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { environment } from './environments/environment';
@@ -23,7 +21,6 @@ import { SpinnerInterceptor } from './spinner/spinner.interceptor';
   declarations: [
     AppComponent,
     HeroProfileComponent,
-    ListadoDeHeroesComponent,
     ModalPollComponent,
     SpinnerComponent
   ],
@@ -31,7 +28,6 @@ import { SpinnerInterceptor } from './spinner/spinner.interceptor';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule,
     RouterModule,
     NgxsModule.forRoot([HeroeState], {
       developmentMode: !environment.production
