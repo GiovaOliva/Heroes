@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { HeroesService } from '../heroes.service';
 import { HeroProfileComponent } from '../hero-profile/hero-profile.component';
 
 @Component({
