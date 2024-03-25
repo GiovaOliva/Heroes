@@ -9,8 +9,6 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeroProfileComponent } from './hero-profile/hero-profile.component';
-import { ModalPollComponent } from './modal-poll/modal-poll.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { environment } from './environments/environment';
 import { HeroeState } from './store/hero.state';
@@ -20,8 +18,6 @@ import { SpinnerInterceptor } from './spinner/spinner.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
-    HeroProfileComponent,
-    ModalPollComponent,
     SpinnerComponent
   ],
   imports: [
