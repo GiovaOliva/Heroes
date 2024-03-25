@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Heroe } from '../classes/heroe';
 import { Store } from '@ngxs/store';
 import { HeroeData } from '../store/hero.actions';
-import { Observable, Subject, lastValueFrom } from 'rxjs';
+import { Observable,  lastValueFrom } from 'rxjs';
 
 
 @Component({
@@ -19,7 +19,6 @@ export class ListadoDeHeroesComponent implements OnInit {
   // The child component : spinner
   @ViewChild('spi') spinner!: SpinnerComponent;
   /* public heroes: Array<Heroe> = []; */
-  hisColor$ = new Subject<string>();
   heroeArray$: Observable<Heroe[]>;
 
   
@@ -58,7 +57,7 @@ export class ListadoDeHeroesComponent implements OnInit {
   
     async prevPage(): Promise<void> {
         
-        const payload = {page: this.heroesService.page - 1}
+        const payload = {searchString: this.searchString, page: this.heroesService.page - 1}
         await lastValueFrom(this.store.dispatch(new HeroeData(payload)));
       }
       
@@ -67,7 +66,7 @@ export class ListadoDeHeroesComponent implements OnInit {
     
   
     async nextPage(): Promise<void> {
-      const payload = {page: this.heroesService.page + 1}
+      const payload = {searchString: this.searchString, page: this.heroesService.page + 1}
       await lastValueFrom(this.store.dispatch(new HeroeData(payload)));
   
       // this.heroeArray = await this.heroesService.getHeroes(this.searchString, this.heroesService.page + 1);

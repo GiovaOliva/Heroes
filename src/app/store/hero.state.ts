@@ -27,11 +27,9 @@ export class HeroeState {
         let Array: Array<Heroe>
         if (action.payload.page === 0){
             this.HeroeService.resetPager();
-            Array = await this.HeroeService.getHeroes();
-        }else if (!action.payload.page){
-            Array = await this.HeroeService.getHeroes(action.payload.searchString)
+            Array = await this.HeroeService.getHeroes(action.payload.searchString);
         }else{
-            Array = await this.HeroeService.getHeroes(action.payload.searchString, action.payload.page)
+            Array = await this.HeroeService.getHeroes(action.payload.searchString, action.payload.page);
         }
         ctx.setState({
             heroes:[
