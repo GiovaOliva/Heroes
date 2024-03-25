@@ -68,9 +68,8 @@ export class ListadoDeHeroesComponent implements OnInit {
     async nextPage(): Promise<void> {
       const payload = {searchString: this.searchString, page: this.heroesService.page + 1}
       await lastValueFrom(this.store.dispatch(new HeroeData(payload)));
-  
-      // this.heroeArray = await this.heroesService.getHeroes(this.searchString, this.heroesService.page + 1);
     }
+          // this.heroeArray = await this.heroesService.getHeroes(this.searchString, this.heroesService.page + 1);
   
     go_to(id: string){
       this.router.navigateByUrl('/heroe/'+id);

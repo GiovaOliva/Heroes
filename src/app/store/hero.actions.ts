@@ -1,6 +1,4 @@
 
-
-
 export class HeroeData {
     static readonly type = '[Heroes] GetData'
 

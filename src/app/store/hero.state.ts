@@ -6,7 +6,6 @@ import { Heroe } from "../classes/heroe";
 import { Injectable } from '@angular/core';
 
 
-
 @Injectable()
 @State<HeroeStateModel>({
     name: 'heroes',
@@ -17,10 +16,7 @@ import { Injectable } from '@angular/core';
 
 export class HeroeState {
 
- 
     constructor(private HeroeService: HeroesService){}
-
-
 
     @Action(HeroeData)
     async get( ctx:  StateContext<HeroeStateModel>, action: HeroeData){
