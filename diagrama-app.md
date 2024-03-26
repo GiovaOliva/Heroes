@@ -1,25 +1,17 @@
 # Diagrama de dominio
 [Enlace al diagrama](https://www.mermaidchart.com/app/projects/ee4f30ea-d8c0-48be-b78c-035f0a74990c/diagrams/bc401bc3-43ac-4bf7-be8f-770af99f5c5a/version/v0.1/edit)
+Requiere hacer login para poder verlo con zoom
 
-## Modelo del diagrama
-    flowchart LR
-        C("Componente listado-de-heroes") -- dispatch --> M("State")
-        M --> H("Service")
-        H -- spinner --> I("API")
-        I -- response --> H
-        H -- data --> M
-        M -- set --> F("Store")
-        C -- select --> F
-        F --> A("Entidad heroes")
-        A --> C
-        A -- spinner-request --> I
-        I -- data --> D("Componente hero-profile")
-        D --> J("Entidad heroe")
-        J --|seleccionar equipo|--> E("Componente modal-poll")
-        E --|equipo elegido|--> B("Entidad team")
-        B --|set color| --> G("Map")
-        J--|set id|-->G
-        G -- |team-color| --> C
+<img src="diagrama.png" alt="diagrama" heigth="500px">
+Los colores de las lineas representan distintas etapas del flujo para hacerlo mas entendible
+
+* linea negra: peticion desde el componente listado-de-heroes hasta llegar a la API
+* linea roja: respuesta de la API hasta ser almacenada en el store
+* linea violeta: llamada del componente listado-de-heroes hasta tener la data para desplegar los heroes
+* linea azul: desde que se clickea en un heroe de la lista para visualizarlo en hero-profile
+* linea amarilla: desde el hero-profile hasta que se guarde su equipo en el map
+* linea verde: información del color del equipo del heroe para ser mostrado en el listado
+
         
         
 ## Explicación paso a paso del flujo:

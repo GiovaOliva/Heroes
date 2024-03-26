@@ -4,8 +4,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SpinnerComponent } from './spinner/spinner.component';
-import { SpinnerInterceptor } from './spinner/spinner.interceptor';
+import { SpinnerComponent } from './pages/spinner/spinner.component';
+import { SpinnerInterceptor } from './pages/spinner/spinner.interceptor';
 import { StateModule } from './store/state.module';
 
 @NgModule({

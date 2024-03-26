@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { HeroProfileComponent } from '../pages/hero-profile/hero-profile.component';
+import { HeroProfileComponent } from '../hero-profile/hero-profile.component';
 
 @Component({
   selector: 'app-modal-poll',

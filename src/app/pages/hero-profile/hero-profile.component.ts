@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { ModalPollComponent } from '../../modal-poll/modal-poll.component';
+import { ModalPollComponent } from '../modal-poll/modal-poll.component';
 import { Heroe } from '../../classes/heroe';
 import { ActivatedRoute} from '@angular/router';
 import { HeroesService } from '../../services/heroes.service';

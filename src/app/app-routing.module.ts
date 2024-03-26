@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ModalPollComponent } from './modal-poll/modal-poll.component';
+import { ModalPollComponent } from './pages/modal-poll/modal-poll.component';
 
 const routes: Routes = [
   { path: 'listado-heroes', loadChildren:() => import('./pages/listado-de-heroes/listado-de-heroes.module').then(m => m.ListadoDeHeroesModule)},

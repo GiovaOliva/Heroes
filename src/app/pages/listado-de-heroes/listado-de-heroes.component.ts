@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { SpinnerComponent } from '../../spinner/spinner.component';
+import { SpinnerComponent } from '../spinner/spinner.component';
 import { HeroesService } from '../../services/heroes.service';
 import { Router } from '@angular/router';
 import { Heroe } from '../../classes/heroe';
@@ -15,16 +15,11 @@ import { TeamsService } from 'src/app/services/teams.service';
   styleUrls: ['./listado-de-heroes.component.scss']
 })
 export class ListadoDeHeroesComponent implements OnInit {
+  
   public title = 'Tutorial de Angular - Héroes de Marvel';
   public searchString: string;
-  // The child component : spinner
-  @ViewChild('spi') spinner!: SpinnerComponent;
-  /* public heroes: Array<Heroe> = []; */
   heroeArray$: Observable<Heroe[]>;
 
-  
-  
-   
     constructor(
       private heroesService: HeroesService,
       private teamsService: TeamsService,
