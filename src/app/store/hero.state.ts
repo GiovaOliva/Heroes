@@ -1,7 +1,7 @@
 import { Action, State, StateContext } from "@ngxs/store";
 import { HeroeStateModel } from "./hero.model";
 import { HeroeData } from "./hero.actions";
-import { HeroesService } from "../heroes.service";
+import { HeroesService } from "../services/heroes.service";
 import { Heroe } from "../classes/heroe";
 import { Injectable } from '@angular/core';
 
@@ -34,8 +34,6 @@ export class HeroeState {
 
             ]
         })
-       console.log(Array)
-
     }
       
 }

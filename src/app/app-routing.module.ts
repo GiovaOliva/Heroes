@@ -3,8 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { ModalPollComponent } from './modal-poll/modal-poll.component';
 
 const routes: Routes = [
-  { path: 'listado-heroes', loadChildren:() => import('./listado-de-heroes/listado-de-heroes.module').then(m => m.ListadoDeHeroesModule)},
-  { path: 'heroe/:id', loadChildren:() => import('./hero-profile/hero-profile.module').then(m => m.HeroProfileModule)},
+  { path: 'listado-heroes', loadChildren:() => import('./pages/listado-de-heroes/listado-de-heroes.module').then(m => m.ListadoDeHeroesModule)},
+  { path: 'heroe/:id', loadChildren:() => import('./pages/hero-profile/hero-profile.module').then(m => m.HeroProfileModule)},
   { path: 'modal-poll', component: ModalPollComponent},
   { path: '**', redirectTo: '/listado-heroes'}
 ];

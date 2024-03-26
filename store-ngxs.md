@@ -248,6 +248,6 @@ Si quiere testear el resultado de la app aqui está el enlace al [repositorio](h
 * [Documentación de NGXS](https://www.ngxs.io/)
 * [Introducción a NGXS por Domini Code](https://www.youtube.com/watch?v=uZUL4jEAsDM&t=1174s&ab_channel=DominiCode)
 * [Proyecto de Posts que implementa NGXS por Tomas Ruiz Diaz](https://www.youtube.com/watch?v=9DZLUfmzJjA&t=4576s&ab_channel=TomasRuizDiaz)
-*  [NGXS Tutorial por Creative Developer](https://www.youtube.com/watch?v=OAXlSbC-fJo&list=PL-zhdk-KbnqBGnCz7F9iyfQKyHDEd2QIh&ab_channel=CreativeDeveloper)
+* [NGXS Tutorial por Creative Developer](https://www.youtube.com/watch?v=OAXlSbC-fJo&list=PL-zhdk-KbnqBGnCz7F9iyfQKyHDEd2QIh&ab_channel=CreativeDeveloper)
 
 

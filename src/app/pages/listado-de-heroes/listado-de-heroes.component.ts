@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { SpinnerComponent } from '../spinner/spinner.component';
-import { HeroesService } from '../heroes.service';
+import { SpinnerComponent } from '../../spinner/spinner.component';
+import { HeroesService } from '../../services/heroes.service';
 import { Router } from '@angular/router';
-import { Heroe } from '../classes/heroe';
+import { Heroe } from '../../classes/heroe';
 import { Store } from '@ngxs/store';
-import { HeroeData } from '../store/hero.actions';
+import { HeroeData } from '../../store/hero.actions';
 import { Observable,  lastValueFrom } from 'rxjs';
+import { TeamsService } from 'src/app/services/teams.service';
 
 
 @Component({
@@ -24,7 +25,10 @@ export class ListadoDeHeroesComponent implements OnInit {
   
   
    
-    constructor(private heroesService: HeroesService, private router:Router, public store: Store) { }
+    constructor(
+      private heroesService: HeroesService,
+      private teamsService: TeamsService,
+      private router:Router, public store: Store) { }
 
     
     async ngOnInit(): Promise<void> {
@@ -36,7 +40,7 @@ export class ListadoDeHeroesComponent implements OnInit {
     }
 
     heroeCodColor(team: string): string{
-      let codColor = this.heroesService.getCodColor(team)
+      let codColor = this.teamsService.getCodColor(team)
       return codColor
     }
 
