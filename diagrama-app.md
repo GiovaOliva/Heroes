@@ -2,7 +2,7 @@
 [Enlace al diagrama](https://www.mermaidchart.com/app/projects/ee4f30ea-d8c0-48be-b78c-035f0a74990c/diagrams/bc401bc3-43ac-4bf7-be8f-770af99f5c5a/version/v0.1/edit)
 Requiere hacer login para poder verlo con zoom
 
-<img src="diagrama.png" alt="diagrama" heigth="500px">
+<img src="diagrama.png" alt="diagrama" height="500px">
 Los colores de las lineas representan distintas etapas del flujo para hacerlo mas entendible
 
 * linea negra: peticion desde el componente listado-de-heroes hasta llegar a la API
