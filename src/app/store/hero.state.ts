@@ -14,27 +14,27 @@ import { Injectable } from '@angular/core';
     }
 })
 
+
+
 export class HeroeState {
+
+    public HeroArray: Array<Heroe>;
 
     constructor(private HeroeService: HeroesService){}
 
     @Action(HeroeData)
     async get( ctx:  StateContext<HeroeStateModel>, action: HeroeData){
-        let Array: Array<Heroe>
-        if (action.payload.page === 0){
-            this.HeroeService.resetPager();
-            Array = await this.HeroeService.getHeroes(action.payload.searchString);
-        }else{
-            Array = await this.HeroeService.getHeroes(action.payload.searchString, action.payload.page);
-        }
+
+        this.HeroArray = await this.HeroeService.getHeroes(action.payload.searchString, action.payload.page);
+        
         ctx.setState({
             heroes:[
                 
-                ...Array
+                ...this.HeroArray
 
             ]
         })
     }
-      
+    
 }
 

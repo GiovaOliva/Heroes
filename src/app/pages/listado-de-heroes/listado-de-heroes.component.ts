@@ -1,11 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { SpinnerComponent } from '../spinner/spinner.component';
+import { Component, OnInit } from '@angular/core';
 import { HeroesService } from '../../services/heroes.service';
 import { Router } from '@angular/router';
 import { Heroe } from '../../classes/heroe';
 import { Store } from '@ngxs/store';
 import { HeroeData } from '../../store/hero.actions';
-import { Observable,  lastValueFrom } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 import { TeamsService } from 'src/app/services/teams.service';
 
 
@@ -17,18 +16,20 @@ import { TeamsService } from 'src/app/services/teams.service';
 export class ListadoDeHeroesComponent implements OnInit {
   
   public title = 'Tutorial de Angular - Héroes de Marvel';
-  public searchString: string;
   heroeArray$: Observable<Heroe[]>;
+  public searchString: string
 
     constructor(
       private heroesService: HeroesService,
       private teamsService: TeamsService,
       private router:Router, public store: Store) { }
 
-    
+    public page = this.heroesService.page
+
+
     async ngOnInit(): Promise<void> {
-      
-      const payload = {searchString: '', page: 0}
+ 
+      const payload = {searchString: this.searchString, page: this.page}
       await lastValueFrom(this.store.dispatch(new HeroeData(payload)));
       this.heroeArray$ = this.store.select(state => state.heroes.heroes)
    
@@ -50,7 +51,7 @@ export class ListadoDeHeroesComponent implements OnInit {
 
     async submitSearch(): Promise<void> {
       this.heroesService.resetPager();
-      const payload = {searchString: this.searchString, page: this.heroesService.page}
+      const payload = {searchString: this.searchString}
       await lastValueFrom(this.store.dispatch(new HeroeData(payload)));
     }
   
