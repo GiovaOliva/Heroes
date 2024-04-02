@@ -5,7 +5,7 @@
       <input type="text" [(ngModel)]="searchString" name="searchString" class="form-control" id="search" placeholder="Búsqueda de super-héroe">
     </div>
   </form>
-  <div *ngFor="let heroe of heroeArray$ | async; let i = index;" class="col-xs-12 col-sm-6 col-md-3 mt-3">
+  <div *ngFor="let heroe of (AllHeroes$ | async)" class="col-xs-12 col-sm-6 col-md-3 mt-3">
       <!--[routerLink]="'/heroe/' + heroe.id" === (click)="go_to(heroe.id)"-->
     <a (click)="go_to(heroe.id)" class="hero-entry" [ngStyle]="{'border-color': heroeCodColor(heroe.teamColor)}" [style.background-image]="'url(' + heroe.thumbnail_path + '.' + heroe.thumbnail_extension + ')'">
       <span>{{heroe.name}}</span>
@@ -17,3 +17,4 @@
     <a class="paginator-next" (click)="nextPage()" *ngIf="getPage() < getTotal() - 1">Next</a>
   </div>
 </div>
+

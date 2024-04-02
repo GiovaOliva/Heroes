@@ -21,6 +21,9 @@
     "@ngxs/devtools-plugin": "^3.8.2-dev.master-18e2312",
     "@ngxs/logger-plugin": "^3.8.2-dev.master-18e2312",
     "@ngxs/store": "^3.8.2-dev.master-18e2312",
+    "axios": "^1.6.8",
+    "express": "^4.19.2",
+    "ngx-pagination": "^6.0.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

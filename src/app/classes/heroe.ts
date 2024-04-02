@@ -1,12 +1,12 @@
-export class Heroe {
-    constructor(
-        public id: string,
-        public name: string,
-        public description: string,
-        public modified: Date,
-        public thumbnail_path: string,
-        public thumbnail_extension: string,
-        public resourceURI: string,
-        public teamColor: string,
-    ) {}
+export interface Heroe {
+
+    id: string,
+    name: string,
+    description: string,
+    modified: Date,
+    thumbnail_path: string,
+    thumbnail_extension: string,
+    resourceURI: string,
+    teamColor: string,
+    
 }

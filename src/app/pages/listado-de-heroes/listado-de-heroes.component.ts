@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { HeroesService } from '../../services/heroes.service';
 import { Router } from '@angular/router';
 import { Heroe } from '../../classes/heroe';
@@ -6,6 +6,7 @@ import { Store } from '@ngxs/store';
 import { HeroeData } from '../../store/hero.actions';
 import { Observable, lastValueFrom } from 'rxjs';
 import { TeamsService } from 'src/app/services/teams.service';
+import { AllHeroes } from 'src/app/store/AllHeroes/heroes.actions';
 
 
 @Component({
@@ -16,24 +17,29 @@ import { TeamsService } from 'src/app/services/teams.service';
 export class ListadoDeHeroesComponent implements OnInit {
   
   public title = 'Tutorial de Angular - Héroes de Marvel';
-  heroeArray$: Observable<Heroe[]>;
   public searchString: string
+  AllHeroes$: Observable<Heroe[]>;
+  public currentPage = 1;
+  public pageSize = 20;
+  public p: number;
+
 
     constructor(
       private heroesService: HeroesService,
       private teamsService: TeamsService,
-      private router:Router, public store: Store) { }
+      private router:Router, public store: Store,
+      private changeDetectorRef: ChangeDetectorRef) { }
 
     public page = this.heroesService.page
 
 
     async ngOnInit(): Promise<void> {
  
-      const payload = {searchString: this.searchString, page: this.page}
-      await lastValueFrom(this.store.dispatch(new HeroeData(payload)));
-      this.heroeArray$ = this.store.select(state => state.heroes.heroes)
-   
-    }
+      await this.getAllHeroes();
+      this.AllHeroes$ = this.store.select(state => state.AllHeroes.AllHeroes)
+      this.changeDetectorRef.detectChanges();
+      
+    } 
 
     heroeCodColor(team: string): string{
       let codColor = this.teamsService.getCodColor(team)
@@ -71,11 +77,23 @@ export class ListadoDeHeroesComponent implements OnInit {
     }
           // this.heroeArray = await this.heroesService.getHeroes(this.searchString, this.heroesService.page + 1);
   
-    go_to(id: string){
+    go_to(id: string): void{
       this.router.navigateByUrl('/heroe/'+id);
     }
 
-} 
+
+    async getAllHeroes(): Promise<void>{
+      
+      if (this.heroesService.condicion){
+        await lastValueFrom(this.store.dispatch(new AllHeroes))
+        this.AllHeroes$ = this.store.select(state => state.AllHeroes.AllHeroes)
+        this.changeDetectorRef.detectChanges(); 
+        this.heroesService.condicion = false;
+      }
+
+    }
+
+}   
 
 
 

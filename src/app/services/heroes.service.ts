@@ -1,7 +1,7 @@
-  import { Injectable } from '@angular/core';
-  import { HttpClient } from '@angular/common/http';
-  import { Heroe } from '../classes/heroe';
-  import { lastValueFrom } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Heroe } from '../classes/heroe';
+import { lastValueFrom } from 'rxjs';
 import { TeamsService } from './teams.service';
 
   @Injectable({
@@ -12,7 +12,7 @@ import { TeamsService } from './teams.service';
 
     private protocol = 'https:';
     private ApiUrl = '//gateway.marvel.com:443/v1/public/';
-    private ApiKey = 'ab30297f4880c92fff8d0a6fa9461ef1'; 
+    private ApiKey = '4e25473721ec4cf62e3fb5e5d817bf7d'; 
     private response: any;
 
     public page = 0;
@@ -20,7 +20,7 @@ import { TeamsService } from './teams.service';
     public total = 0;
 
     public heroes: Array<Heroe> = [];
-    public heroe: Heroe;
+    public condicion = true;
 
     constructor(
       private http: HttpClient, 
@@ -31,7 +31,7 @@ import { TeamsService } from './teams.service';
       if (page || page === 0) {
         this.page = page;
       }
-      const url = this.protocol + this.ApiUrl + `characters?ts=1&apikey=${this.ApiKey}&hash=e66f6d4113c62a340eccea2bbe11aef7`
+      const url = this.protocol + this.ApiUrl + `characters?ts=1&apikey=${this.ApiKey}&hash=e5dacd6966feba077ce3a33bf4068292`
       + '&offset=' + (this.page * this.step)
       + (nameStartsWith ? ('&nameStartsWith=' + nameStartsWith) : '');
       this.response = await lastValueFrom(this.http.get(url));
@@ -44,16 +44,17 @@ import { TeamsService } from './teams.service';
             team = value
           }
         }
-        this.heroes.push(new Heroe(
-          result.id,
-          result.name,
-          result.description,
-          result.modified,
-          result.thumbnail.path,
-          result.thumbnail.extension,
-          result.resourceURI,
-          team || this.teamService.getTeamColor(result.id),
-        ))
+        let heroe: Heroe = {
+          id: result.id,
+          name: result.name,
+          description: result.description,
+          modified: result.modified,
+          thumbnail_path: result.thumbnail_path,
+          thumbnail_extension: result.thumbnail_extension,
+          resourceURI: result.resourceURI,
+          teamColor: this.teamService.getTeamColor(result.id)
+        }
+        this.heroes.push(heroe);
       })
 
       return this.heroes;
@@ -62,21 +63,45 @@ import { TeamsService } from './teams.service';
       
 
     async getHeroe(id: string): Promise<Heroe> {
-      const url = this.protocol + this.ApiUrl + 'characters/' + id + `characters?ts=1&apikey=${this.ApiKey}&hash=e66f6d4113c62a340eccea2bbe11aef7`;
+      const url = this.protocol + this.ApiUrl + 'characters/' + id + `characters?ts=1&apikey=${this.ApiKey}&hash=e5dacd6966feba077ce3a33bf4068292`;
       this.response = await lastValueFrom(this.http.get(url));
       const temp = this.response.data.results[0];
-      this.heroe = new Heroe(
-       temp.id,
-       temp.name,
-       temp.description,
-       temp.modified,
-       temp.thumbnail.path,
-       temp.thumbnail.extension,
-       temp.resourceURI,
-       this.teamService.getTeamColor(temp.id)
-      )
-      return this.heroe
+      let heroe: Heroe = {
+        id: temp.id,
+        name: temp.name,
+        description: temp.descriptions,
+        modified: temp.modified,
+        thumbnail_path: temp.thumbnail_path,
+        thumbnail_extension: temp.thumbnail_extension,
+        resourceURI: temp.resourceURI,
+        teamColor: this.teamService.getTeamColor(temp.id)
+
+      }
+      return heroe; 
     }
+
+    async getAllHeroes(): Promise<Heroe[]>{
+      console.log('estoy ejecuntando la funcion')
+      let response: any
+      const url = 'http://localhost:3000/api/marvel'
+      response = await lastValueFrom(this.http.get<any>(url));
+      response.forEach( (result: any) => {
+        let heroe: Heroe = {
+          id: result.id,
+          name: result.name,
+          description: result.description,
+          modified: result.modified,
+          thumbnail_path: result.thumbnail_path,
+          thumbnail_extension: result.thumbnail_extension,
+          resourceURI: result.resourceURI,
+          teamColor: this.teamService.getTeamColor(result.id)
+        }
+        this.heroes.push(heroe);
+      });
+      return this.heroes        
+    };
+
+    
 
 
     resetPager() {

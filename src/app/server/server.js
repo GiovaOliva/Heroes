@@ -8,8 +8,8 @@ app.use(cors({ origin: 'http://localhost:4200' }));
 
 const protocol = 'https:';
 const ApiUrl = '//gateway.marvel.com:443/v1/public/';
-const ApiKey = 'ab30297f4880c92fff8d0a6fa9461ef1';  
-const hash = 'e66f6d4113c62a340eccea2bbe11aef7'; 
+const ApiKey = '4e25473721ec4cf62e3fb5e5d817bf7d';  
+const hash = 'e5dacd6966feba077ce3a33bf4068292'; 
 let offset = 0;
 let arrayHeroe = [];
 
@@ -24,7 +24,7 @@ function Heroe(id, name, description, modified, thumbnail_path, thumbnail_extens
 }
 
 async function getHeroes(offset){
-    let url = `${protocol}${ApiUrl}characters?ts=1&apikey=${ApiKey}&hash=${hash}&offset=${offset}`;
+    let url = `${protocol}${ApiUrl}characters?ts=1&apikey=${ApiKey}&hash=${hash}&limit=100&offset=${offset}`;
     const response = await axios.get(url);
         response.data.data.results.forEach( heroe => {
             let hero = new Heroe(
@@ -44,10 +44,11 @@ async function getHeroes(offset){
 
 
 app.get('/api/marvel', async (req, res) => {
+  console.log('estoy haciendo la petición')
   try {
-    for(let i = 0; i < 79; i++){
+    for(let i = 0; i < 15; i++){
         await getHeroes(offset)
-        offset+= 20
+        offset+= 100
     }
     res.json((arrayHeroe));
     console.log(offset);
