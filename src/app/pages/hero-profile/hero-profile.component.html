@@ -1,4 +1,4 @@
-<ng-container *ngIf="heroe">
+<ng-container *ngIf="Heroe$ | async as heroe">
     <h1 class="text-center">{{heroe.name | uppercase }}</h1>
     <a class="goback" (click)="goBack()">Atrás</a>
     <div class="row" class="heroe-profile">

@@ -8,3 +8,8 @@ export class HeroeData {
    
 }
 
+export class GetHeroe{
+    static readonly type = '[GetHeroe] Get';
+
+    constructor(public readonly payload: string){}
+}

@@ -27,45 +27,45 @@ export class AllHeroesState {
 
     constructor(private HeroeService: HeroesService) { }
 
-    @Action(AllHeroes)
-    async get(ctx: StateContext<AllHeroesStateModel>, action: AllHeroes) {
+    // @Action(AllHeroes)
+    // async get(ctx: StateContext<AllHeroesStateModel>, action: AllHeroes) {
 
-        this.AllHeroes = await this.HeroeService.getAllHeroes();
-        ctx.setState({
-            ...ctx.getState(),
-            AllHeroes: [
-                ...this.AllHeroes
-            ],
-            Heroe: undefined
-        })
-        console.log('guarde la data en el store')
-    }
-
-
-    @Action(GetHeroe)
-    async getHeroe(ctx: StateContext<AllHeroesStateModel>, action: GetHeroe) {
-        let heroe = ctx.getState().AllHeroes.find(heroe => heroe.id == action.payload)
-        ctx.setState({
-            ...ctx.getState(),
-            Heroe: heroe
-        });
-    }
+    //     this.AllHeroes = await this.HeroeService.getAllHeroes();
+    //     ctx.setState({
+    //         ...ctx.getState(),
+    //         AllHeroes: [
+    //             ...this.AllHeroes
+    //         ],
+    //         Heroe: undefined
+    //     })
+    //     console.log('guarde la data en el store')
+    // }
 
 
-    @Action(UpdateHeroe)
-    async updateHeroe( ctx: StateContext<AllHeroesStateModel>, action: UpdateHeroe ){
-        let index = ctx.getState().AllHeroes.findIndex( heroe => heroe.id == action.payload.id);
-        this.AllHeroes = [...ctx.getState().AllHeroes]
-        let heroe = { ...this.AllHeroes[index]}
-        heroe.teamColor = action.payload.team;
-        this.AllHeroes[index] = heroe;
+//     @Action(GetHeroe)
+//     async getHeroe(ctx: StateContext<AllHeroesStateModel>, action: GetHeroe) {
+//         let heroe = ctx.getState().AllHeroes.find(heroe => heroe.id == action.payload)
+//         ctx.setState({
+//             ...ctx.getState(),
+//             Heroe: heroe
+//         });
+//     }
+
+
+//     @Action(UpdateHeroe)
+//     async updateHeroe( ctx: StateContext<AllHeroesStateModel>, action: UpdateHeroe ){
+//         let index = ctx.getState().AllHeroes.findIndex( heroe => heroe.id == action.payload.id);
+//         this.AllHeroes = [...ctx.getState().AllHeroes]
+//         let heroe = { ...this.AllHeroes[index]}
+//         heroe.teamColor = action.payload.team;
+//         this.AllHeroes[index] = heroe;
         
-        ctx.patchState({
-            AllHeroes: [
-                ...this.AllHeroes
-            ],
-            Heroe: heroe
-        })
-    }
+//         ctx.patchState({
+//             AllHeroes: [
+//                 ...this.AllHeroes
+//             ],
+//             Heroe: heroe
+//         })
+//     }
 
 }
