@@ -3,9 +3,9 @@ import { ModalPollComponent } from '../modal-poll/modal-poll.component';
 import { Heroe } from '../../classes/heroe';
 import { ActivatedRoute} from '@angular/router';
 import { Location } from '@angular/common';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { TeamsService } from 'src/app/services/teams.service';
-import { Select, Store } from '@ngxs/store';
+import { Store } from '@ngxs/store';
 import { GetHeroe } from 'src/app/store/AllHeroes/heroes.actions';
 import { HeroesSelector } from 'src/app/store/hero.selector';
 
@@ -19,8 +19,8 @@ export class HeroProfileComponent implements OnInit {
   private id : string;
   public question_modal: string;
   public team:string = "";
-  hisColor$ = new Subject<string>();
-  @Select(HeroesSelector.heroeState) public Heroe$: Observable<Heroe>;
+  public hisColor$ = new Subject<string>();
+  public heroe: Heroe;
 
 
   constructor(
@@ -43,25 +43,23 @@ export class HeroProfileComponent implements OnInit {
     });
 
     this.store.dispatch(new GetHeroe(this.id));
-    this.Heroe$.subscribe(data => {
-      
-      if(data){
-        this.team = data.teamColor
-        this.changeDetectorRef.detectChanges();
-        this.hisColor$.next(this.heroeCodColor(this.team));
-      }
-
-    })
+    this.heroe = this.store.selectSnapshot(HeroesSelector.heroeState)
+    this.team = this.heroe.teamColor
+    this.changeDetectorRef.detectChanges();
+    this.hisColor$.next(this.heroeCodColor(this.team))
     
     }
 
   heroeCodColor(team: string): string{
-    let codColor = this.teamsService.getCodColor(team)
-    return codColor
+
+    return this.teamsService.getCodColor(team)
+  
   }
 
   goBack(): void{
+
     this.location.back();
+  
   }
 
   setTeam(team: string): void {
@@ -79,8 +77,6 @@ export class HeroProfileComponent implements OnInit {
     this.modal.toggle_modal();
 
   }
-
-
 
   }
 

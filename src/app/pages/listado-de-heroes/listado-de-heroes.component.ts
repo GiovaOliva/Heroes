@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HeroesService } from '../../services/heroes.service';
 import { Router } from '@angular/router';
 import { Heroe } from '../../classes/heroe';
-import { Select, Store } from '@ngxs/store';
+import { Store } from '@ngxs/store';
 import { HeroeData } from '../../store/hero.actions';
-import { Observable, lastValueFrom } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import { TeamsService } from 'src/app/services/teams.service';
 import { HeroesSelector } from 'src/app/store/hero.selector';
 
@@ -18,8 +18,7 @@ export class ListadoDeHeroesComponent implements OnInit {
   
   public title = 'Tutorial de Angular - Héroes de Marvel';
   public searchString: string
-  @Select(HeroesSelector.heroesState) public Heroes$: Observable<Heroe[]>;
-  @Select(HeroesSelector.totalState) public total$: Observable<number>;
+  public heroes: Array<Heroe>
   public total: number
 
     constructor(
@@ -27,44 +26,38 @@ export class ListadoDeHeroesComponent implements OnInit {
       private teamsService: TeamsService,
       private router:Router, 
       private store: Store,
-      private changeDetectorRef: ChangeDetectorRef) { }
-
-    public page = this.heroesService.page
-
+      ) { }
 
     async ngOnInit(): Promise<void> {
  
-      const payload = {searchString: this.searchString, page: this.heroesService.page}
-      this.actualizarHeroes(payload)
-      this.changeDetectorRef.detectChanges();
+      await this.actualizarHeroes({searchString: this.searchString, page: this.heroesService.page})
       
     } 
 
     async submitSearch(): Promise<void> {
       
       this.heroesService.resetPager();
-      const payload = {searchString: this.searchString}
-      this.actualizarHeroes(payload);
+      await this.actualizarHeroes({searchString: this.searchString});
     
     }
   
     async prevPage(): Promise<void> {
         
-        const payload = {searchString: this.searchString, page: this.heroesService.page - 1}
-        this.actualizarHeroes(payload);
+      await this.actualizarHeroes({searchString: this.searchString, page: this.heroesService.page - 1});
         
       }
       
     async nextPage(): Promise<void> {
       
-      const payload = {searchString: this.searchString, page: this.heroesService.page + 1}
-      this.actualizarHeroes(payload);
+      await this.actualizarHeroes({searchString: this.searchString, page: this.heroesService.page + 1});
     
     }
     
     async actualizarHeroes(payload: object): Promise<void> { 
 
       await lastValueFrom(this.store.dispatch(new HeroeData(payload)));
+      this.heroes = this.store.selectSnapshot(HeroesSelector.heroesState);
+      this.total = this.store.selectSnapshot(HeroesSelector.totalState);
    
     }
     
@@ -76,22 +69,13 @@ export class ListadoDeHeroesComponent implements OnInit {
 
     heroeCodColor(team: string): string{
 
-      let codColor = this.teamsService.getCodColor(team)
-      return codColor
+      return this.teamsService.getCodColor(team)
 
     }
 
     getPage(): number{
 
-      let page = this.heroesService.page;
-      return page
-
-    }
-
-    getTotal(): number{
-
-      this.total$.subscribe((data) =>this.total = data);
-      return this.total
+      return this.heroesService.page;
 
     }
 

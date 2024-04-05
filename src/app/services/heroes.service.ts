@@ -11,10 +11,7 @@ import { lastValueFrom } from 'rxjs';
 
     public page = 0;
     public step = 20;
-    public total = 0;
 
-    public heroes: Array<Heroe> = [];
-    public condicion = true;
 
     constructor(
       private http: HttpClient

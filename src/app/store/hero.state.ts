@@ -32,7 +32,8 @@ export class HeroeState {
     async get( ctx:  StateContext<HeroeStateModel>, action: HeroeData){
         this.HeroArray = [];
         let response = await this.HeroeService.getHeroes(action.payload.searchString, action.payload.page);
-        response.heroes.forEach( (hero: any) => {
+        console.log(response)
+        response.arrayHeroe.forEach( (hero: any) => {
             let team = '';
             for ( const [key, value] of this.TeamService.teams){
                 if (key == hero.id){

@@ -15,7 +15,7 @@ export class HeroesSelector {
     }
 
     @Selector([HeroeState])
-    static totalState({total}: HeroeStateModel): any{
+    static totalState({total}: HeroeStateModel): number{
         return total
     }
 }
