@@ -15,6 +15,7 @@ export class SpinnerInterceptor implements HttpInterceptor {
   constructor(private readonly Spinner: SpinnerService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    if( (request.url.startsWith('http://localhost:3000/api/marvel'))){
     requestCount++;
     this.Spinner.show();
 
@@ -24,5 +25,8 @@ export class SpinnerInterceptor implements HttpInterceptor {
         if (requestCount === 0) {
         this.Spinner.hide()}})
     );
+  }else{
+    return next.handle(request);
   }
+}
 }

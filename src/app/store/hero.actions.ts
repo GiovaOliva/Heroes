@@ -12,3 +12,9 @@ export class GetHeroe{
 
     constructor(public readonly payload: string){}
 }
+
+export class SetTeam{
+    static readonly type = '[SetTeam] Set';
+
+    constructor(public readonly payload: {id: string, team:string}){}
+}

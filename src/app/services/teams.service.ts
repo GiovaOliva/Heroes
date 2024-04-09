@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,11 @@ export class TeamsService {
 
   public teams = new Map();
 
-  constructor() { }
+  public url = `http://localhost:3000/api/team`;
+
+  constructor(
+    private http: HttpClient
+  ) { }
 
 
   getTeamColor(id: string):string{
@@ -31,6 +37,16 @@ export class TeamsService {
     return this.teamColors[teamName] || ""
   }
 
+  async postHeroeTeam(body: {id: string, team: string}): Promise<void>{
+
+    console.log(await lastValueFrom(this.http.post(this.url, body)));
+  
+  }
+
+  async patchHeroeTeam(body: {id: string, team: string}): Promise<void>{
+
+    console.log(await lastValueFrom(this.http.patch(this.url, body)));
+  }
 
   
 

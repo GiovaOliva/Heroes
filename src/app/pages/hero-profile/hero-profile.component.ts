@@ -6,14 +6,16 @@ import { Location } from '@angular/common';
 import { Subject } from 'rxjs';
 import { TeamsService } from 'src/app/services/teams.service';
 import { Store } from '@ngxs/store';
-import { GetHeroe } from 'src/app/store/AllHeroes/heroes.actions';
+import { GetHeroe } from 'src/app/store/hero.actions';
 import { HeroesSelector } from 'src/app/store/hero.selector';
+import { SetTeam } from 'src/app/store/hero.actions';
 
 @Component({
   selector: 'app-hero-profile',
   templateUrl: './hero-profile.component.html',
   styleUrls: ['./hero-profile.component.scss']
 })
+
 export class HeroProfileComponent implements OnInit {
   @ViewChild('modal') modal!: ModalPollComponent;
   private id : string;
@@ -65,9 +67,12 @@ export class HeroProfileComponent implements OnInit {
   setTeam(team: string): void {
 
     this.team = team;
-    this.teamsService.teams.set(this.id, this.team)
+    this.store.dispatch(new SetTeam({id: this.id, team: this.team}))
+    
     this.changeDetectorRef.detectChanges(); 
     this.hisColor$.next(this.heroeCodColor(team));
+    this.store.dispatch(new GetHeroe(this.id));
+    this.heroe = this.store.selectSnapshot(HeroesSelector.heroeState)
     
   }
 
